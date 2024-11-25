@@ -1,15 +1,15 @@
-from base import LocalGateway, base_logger
+from base import LocalGateway, base_logger, PeriodicTrigger
 
 
 app = LocalGateway()
 
 
-async def other():
+async def demo():
     base_logger.info("HELLO WORLD!!! You did it! :D")
     return
 
 
-async def test():
+async def base_fn():
     """
     Test example of dynamically deploying another route upon an HTTP request
 
@@ -24,10 +24,10 @@ async def test():
     SIF Status, which means upon receiving an event (in this case `test`), you
     will see in the logs of this example the print above.
     """
-    app.deploy(other, "testing-2", "test", path="testing")
+    app.deploy(demo, "demo-fn", "GenEvent", path="testing")
     return {"status": 200}
 
 # Deploy a route within this server to be reachable from the SIF scheduler
 # it appends the name of the cb to `/api/`. For more, please read the
 # documentation for `deploy`
-app.deploy(test, "testing", "test")
+app.deploy(base_fn, "fn-fabric", "CreateFn")
