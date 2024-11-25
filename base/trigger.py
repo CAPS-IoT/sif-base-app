@@ -6,7 +6,7 @@ from abc import ABC
 from datetime import timedelta
 from threading import Thread
 
-from base import BaseEvent
+from base import BaseEventFabric
 
 
 def one_shot(cb):
@@ -31,7 +31,7 @@ class Trigger(ABC):
     :param wait_time: indicates if there must be a delay before scheduling the first executions
     """
 
-    def __init__(self, evt_cb: BaseEvent, duration: str = "1s", one_shot: bool = False, wait_time: str = None):
+    def __init__(self, evt_cb: BaseEventFabric, duration: str = "1s", one_shot: bool = False, wait_time: str = None):
         super(Trigger, self).__init__()
 
         self.wt = None
@@ -72,7 +72,7 @@ class OneShotTrigger(Trigger):
     :param wait_time: indicates if there must be a delay before scheduling the first executions
     """
 
-    def __init__(self, evt_cb: BaseEvent, wait_time: str = None):
+    def __init__(self, evt_cb: BaseEventFabric, wait_time: str = None):
         super(OneShotTrigger, self).__init__(
             evt_cb, one_shot=True, wait_time=wait_time)
 
@@ -86,6 +86,6 @@ class PeriodicTrigger(Trigger):
     :param wait_time: indicates if there must be a delay before scheduling the first executions
     """
 
-    def __init__(self, evt_cb: BaseEvent, duration: str, wait_time: str = None):
+    def __init__(self, evt_cb: BaseEventFabric, duration: str, wait_time: str = None):
         super(PeriodicTrigger, self).__init__(
             evt_cb, duration, wait_time=wait_time)

@@ -5,11 +5,11 @@ from abc import ABC, abstractmethod
 from typing import Tuple, Any
 
 
-class BaseEvent(ABC):
+class BaseEventFabric(ABC):
     def __init__(self):
         self.scheduler = os.environ.get("SCH_SERVICE_NAME", "localhost:8080")
         print(f"Relying on the scheduler at {self.scheduler}")
-        super(BaseEvent, self).__init__()
+        super(BaseEventFabric, self).__init__()
 
     @abstractmethod
     def call(self, *args, **kwargs) -> Tuple[str, Any]:
