@@ -1,4 +1,4 @@
-from base import LocalGateway, base_logger, PeriodicTrigger
+from base import LocalGateway, base_logger, PeriodicTrigger, ExampleEventFabric
 
 
 app = LocalGateway()
@@ -24,10 +24,15 @@ async def base_fn():
     SIF Status, which means upon receiving an event (in this case `test`), you
     will see in the logs of this example the print above.
     """
-    app.deploy(demo, "demo-fn", "GenEvent", path="testing")
+    app.deploy(demo, "demo-fn", "GenEvent")
     return {"status": 200}
 
 # Deploy a route within this server to be reachable from the SIF scheduler
 # it appends the name of the cb to `/api/`. For more, please read the
 # documentation for `deploy`
 app.deploy(base_fn, "fn-fabric", "CreateFn")
+
+
+evt = ExampleEventFabric()
+
+tgr = PeriodicTrigger(evt, "30s", "1m")

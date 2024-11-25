@@ -31,3 +31,12 @@ class BaseEventFabric(ABC):
         if res.status >= 300:
             print(
                 f"Failure to send EventRequest to the scheduler because {res.reason}")
+
+
+class ExampleEventFabric(BaseEventFabric):
+
+    def __init__(self):
+        super(ExampleEventFabric, self).__init__()
+
+    def call(self, *args, **kwargs):
+        return "GenEvent", None
