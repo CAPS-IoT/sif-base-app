@@ -26,7 +26,7 @@ class BaseEventFabric(ABC):
     def __call__(self, *args, **kwargs):
         evt_name, data = self.call(*args, **kwargs)
         http = urllib3.PoolManager()
-        res = http.request('POST', self.scheduler,
+        res = http.request('POST', f"{self.scheduler}/api/event",
                            json=dict(name=evt_name, data=data), retries=urllib3.Retry(5))
         if res.status >= 300:
             print(
