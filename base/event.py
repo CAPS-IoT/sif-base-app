@@ -7,7 +7,11 @@ from typing import Tuple, Any
 
 class BaseEventFabric(ABC):
     def __init__(self):
-        self.scheduler = os.environ.get("SCH_SERVICE_NAME", "localhost:8080")
+        self.scheduler = os.environ.get(
+            "SCH_SERVICE_NAME", "http://localhost:8080")
+        if not self.scheduler.startswith("http://"):
+            self.scheduler = f"http://{self.scheduler}"
+
         print(f"Relying on the scheduler at {self.scheduler}")
         super(BaseEventFabric, self).__init__()
 
