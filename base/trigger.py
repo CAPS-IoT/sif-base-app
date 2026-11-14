@@ -47,7 +47,8 @@ class Trigger(ABC):
 
         if runImmediate:
             next_time = datetime.now() + timedelta(seconds=30)
-            self.scheduler.add_job(eventCallback,
+            evtCb = eventCallback if not oneShot else self.oneShotCallback(eventCallback)
+            self.scheduler.add_job(evtCb,
                                    trigger="date",
                                    run_date=next_time,
                                    timezone="Europe/Berlin"
@@ -57,7 +58,7 @@ class Trigger(ABC):
             self.job_identifier = self.scheduler.add_job(self.oneShotCallback(eventCallback),
                                                          CronTrigger.from_crontab(cronSpec, "Europe/Berlin"))
 
-        if not oneShot:
+        if not oneShot and not runImmediate:
             self.scheduler.add_job(eventCallback,
                                    CronTrigger.from_crontab(cronSpec,
                                                             "Europe/Berlin")
