@@ -35,4 +35,5 @@ app.deploy(base_fn, "fn-fabric", "CreateFn")
 
 evt = ExampleEventFabric()
 
-tgr = PeriodicTrigger(evt, "30s", "1m")
+# Executes the trigger upon creation (plus a delay of 30s) but only once. 
+tgr = PeriodicTrigger(evt, True, "0 9 * * *")
