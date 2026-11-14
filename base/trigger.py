@@ -3,6 +3,7 @@ import durationpy
 
 from abc import ABC
 from datetime import timedelta, datetime, tzinfo
+from zoneinfo import ZoneInfo
 from threading import Thread
 
 from apscheduler.triggers.cron import CronTrigger
@@ -46,7 +47,7 @@ class Trigger(ABC):
         self.job_identifier = None
 
         if runImmediate:
-            next_time = datetime.now() + timedelta(seconds=30)
+            next_time = datetime.now(ZoneInfo("Europe/Berlin")) + timedelta(seconds=30)
         
             self.scheduler.add_job(self.oneShotCallback(eventCallback),
                                    trigger="date",
