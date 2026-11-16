@@ -49,7 +49,7 @@ class Trigger(ABC):
         if runImmediate:
             next_time = datetime.now(ZoneInfo("Europe/Berlin")) + timedelta(seconds=30)
         
-            self.scheduler.add_job(self.oneShotCallback(eventCallback),
+            self.job_identifier = self.scheduler.add_job(self.oneShotCallback(eventCallback),
                                    trigger="date",
                                    run_date=next_time,
                                    timezone="Europe/Berlin"
